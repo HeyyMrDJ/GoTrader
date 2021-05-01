@@ -4,27 +4,20 @@ import (
 	"database/sql"
 	"fmt"
 	"html/template"
-	"log"
 	"net/http"
 	"strconv"
+	"https://github.com/HeyyMrDJ/GoTrader/src/http"
 
 	_ "github.com/mattn/go-sqlite3"
 )
 
 func main() {
-	//GetTradeInfo()
-	//CreateTable()
-	//UpdateTrade(1, "DOGE", 1, 1)
 	StartServer()
 
 }
 
 func updatetradeHandler(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
-	// logic part of log in
-	//var amount float32
-	//name := r.Form["name"][0]
-	//name := r.Form["name"][0]
 	amount, _ := strconv.ParseFloat(r.Form.Get("amount"), 64)
 	price, _ := strconv.ParseFloat(r.Form.Get("price"), 64)
 	id, _ := strconv.Atoi(r.Form.Get("id"))
@@ -40,10 +33,6 @@ func updatetradeHandler(w http.ResponseWriter, r *http.Request) {
 
 func deletetradeHandler(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
-	// logic part of log in
-	//var amount float32
-	//name := r.Form["name"][0]
-	//name := r.Form["name"][0]
 	trade, _ := strconv.Atoi(r.Form.Get("delete"))
 	DeleteTrade(trade)
 	http.Redirect(w, r, "/trades", 302)
@@ -52,10 +41,6 @@ func deletetradeHandler(w http.ResponseWriter, r *http.Request) {
 
 func posttradeHandler(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
-	// logic part of log in
-	//var amount float32
-	//name := r.Form["name"][0]
-	//name := r.Form["name"][0]
 	amount, _ := strconv.ParseFloat(r.Form.Get("amount"), 64)
 	price, _ := strconv.ParseFloat(r.Form.Get("price"), 64)
 	fmt.Println(r.Form.Get("name"))
@@ -191,14 +176,6 @@ func DeleteTrade(ID int) {
 	if err != nil {
 		fmt.Println(err)
 	}
-	//stmt, err2 := db.Prepare(`
-	//	delete from trades where ID=12
-	//`)
-	//stmt.Exec(12)
-	//
-	//if err2 != nil {
-	//	fmt.Println(err2)
-	//}
 
 	stmt, err := db.Prepare("DELETE FROM trades WHERE ID=?")
 	checkErr(err)
@@ -219,14 +196,6 @@ func UpdateTrade(ID int, name string, amount, price float64) {
 	if err != nil {
 		fmt.Println(err)
 	}
-	//stmt, err2 := db.Prepare(`
-	//	delete from trades where ID=12
-	//`)
-	//stmt.Exec(12)
-	//
-	//if err2 != nil {
-	//	fmt.Println(err2)
-	//}
 
 	stmt, err := db.Prepare("UPDATE trades set Name=?, Amount=?, Price=? where ID=?")
 	checkErr(err)
@@ -260,21 +229,6 @@ func GetTrades() {
 		fmt.Println(name, amount)
 	}
 	db.Close()
-}
-
-func StartServer() {
-	fileServer := http.FileServer(http.Dir("../web/static/"))
-	http.Handle("/", fileServer)
-	http.HandleFunc("/trades/", tradeHandler)
-	http.HandleFunc("/trades/newtrade", posttradeHandler)
-	http.HandleFunc("/trades/deletetrade", deletetradeHandler)
-	http.HandleFunc("/trades/updatetrade", updatetradeHandler)
-	http.HandleFunc("/dashboard/", dashHandler)
-	http.HandleFunc("/home/", homeHandler)
-	fmt.Printf("Starting server at port 8080\n")
-	if err := http.ListenAndServe(":8080", nil); err != nil {
-		log.Fatal(err)
-	}
 }
 
 type Trade struct {
