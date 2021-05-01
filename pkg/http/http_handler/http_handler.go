@@ -21,7 +21,7 @@ func UpdatetradeHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(r.Form.Get("amount"))
 	fmt.Println(r.Form.Get("price"))
 	db_functions.UpdateTrade(id, name, amount, price)
-	http.Redirect(w, r, "/trades", 302)
+	http.Redirect(w, r, "/trades", http.StatusFound)
 
 }
 
@@ -29,7 +29,7 @@ func DeletetradeHandler(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	trade, _ := strconv.Atoi(r.Form.Get("delete"))
 	db_functions.DeleteTrade(trade)
-	http.Redirect(w, r, "/trades", 302)
+	http.Redirect(w, r, "/trades", http.StatusFound)
 
 }
 
@@ -41,7 +41,7 @@ func PosttradeHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(r.Form.Get("amount"))
 	fmt.Println(r.Form.Get("price"))
 	db_functions.NewTrade(r.Form.Get("name"), price, amount)
-	http.Redirect(w, r, "/trades", 302)
+	http.Redirect(w, r, "/trades", http.StatusFound)
 
 }
 
