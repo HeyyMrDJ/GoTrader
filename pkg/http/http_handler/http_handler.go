@@ -37,10 +37,11 @@ func PosttradeHandler(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	amount, _ := strconv.ParseFloat(r.Form.Get("amount"), 64)
 	price, _ := strconv.ParseFloat(r.Form.Get("price"), 64)
+	name := r.Form.Get("name")
 	fmt.Println(r.Form.Get("name"))
 	fmt.Println(r.Form.Get("amount"))
 	fmt.Println(r.Form.Get("price"))
-	db_functions.NewTrade(r.Form.Get("name"), price, amount)
+	db_functions.NewTrade(name, amount, price)
 	http.Redirect(w, r, "/trades", http.StatusFound)
 
 }
