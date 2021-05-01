@@ -1,0 +1,100 @@
+{{define "Trades"}}
+  <div style="padding:20px; margin-bottom: 40px;">
+      <h1>Trades</h1>
+      <table class="table table-dark table-striped table-hover">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">Amount</th>
+              <th scope="col">Price</th>
+              <th scope="col">Delete</th>
+              <th scope="col">Update</th>
+            </tr>
+          </thead>
+          <tbody>
+              {{range .}}
+                  <tr>
+                    
+                      <td>{{.ID}}</td>
+                      <td>{{.Name}}</td>
+                      <td>{{.Amount}}</td>
+                      <td>{{.Price}}</td>
+                      <td>
+                        <form action="/trades/deletetrade" method="post">
+                            <input type="submit" name="delete" value={{.ID}} class="btn-danger btn"  style="font-size: 0;" />
+                        </form>
+                        </td>
+                        <td>                    
+                            <form action="/trades/deletetrade" method="post">
+                            <input type="submit" name="update" value="Update" class="btn-primary btn" style="font-size: 0;" />
+                        </form>
+                        </td>
+                  </tr>
+              {{end}}
+          </tbody>
+        </table>
+
+        <div>
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="float: right;">
+                New Trade
+            </button>
+        </div>
+
+        <div class="collapse container text-white" id="collapseExample" style="margin-top: 60px;">
+                <h2>New Trade</h2>
+                <p>Enter new trades below</p>
+                <form action="/trades/newtrade" method="POST">
+                <div class="form-group">
+                    <label for="usr">Name:</label>
+                    <input type="text" class="form-control" id="usr" name="name">
+                </div>
+                <div class="form-group">
+                    <label for="usr">Amount:</label>
+                    <input type="text" class="form-control" id="usr" name="amount">
+                </div>
+                <div class="form-group">
+                    <label for="trade">Price:</label>
+                    <input type="text" class="form-control" id="trade" name="price">
+                </div>
+                <button type="submit" class="btn btn-primary">Post Trade</button>
+                </form>
+        </div>
+        <div>
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample" style="float: right; margin-right: 10px">
+                Update Trade
+            </button>
+        </div>
+        <div class="collapse container text-white" id="collapseExample2" style="margin-top: 60px;">
+            <h2>Update Trade</h2>
+            <p>You must enter ID, Name, Amount, and Price</p>
+            <form action="/trades/updatetrade" method="POST">
+            <div class="form-group">
+                <label for="usr">ID:</label>
+                <input type="text" class="form-control" id="usr" name="id">
+            </div>
+            <div class="form-group">
+                <label for="usr">Name:</label>
+                <input type="text" class="form-control" id="usr" name="name">
+            </div>
+            <div class="form-group">
+                <label for="usr">Amount:</label>
+                <input type="text" class="form-control" id="usr" name="amount">
+            </div>
+            <div class="form-group">
+                <label for="trade">Price:</label>
+                <input type="text" class="form-control" id="trade" name="price">
+            </div>
+            <button type="submit" class="btn btn-primary">Update Trade</button>
+            </form>
+    </div>
+    </div>
+
+    
+ {{end}}
+
+{{template "Header"}}
+{{template "Trades" .}}
+
+
+{{template "Footer"}}
