@@ -3,6 +3,8 @@ package db_functions
 import (
 	"database/sql"
 	"fmt"
+
+	_ "github.com/mattn/go-sqlite3"
 )
 
 func GetTradeInfo() (float64, float64) {
@@ -28,7 +30,7 @@ func TradeAmount(PortValue, SLPercent float64) float64 {
 }
 
 func NewTrade(name string, amount, price float64) {
-	db, err := sql.Open("sqlite3", "../trades.db")
+	db, err := sql.Open("sqlite3", "./trades.db")
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -43,17 +45,17 @@ func NewTrade(name string, amount, price float64) {
 }
 
 func CreateTable() {
-	db, err := sql.Open("sqlite3", "../trades.db")
+	db, err := sql.Open("sqlite3", "./trades.db")
 	if err != nil {
 		fmt.Println(err)
 	}
 	stmt, err2 := db.Prepare(`
-		CREATE TABLE "trades" (
+		CREATE TABLE IF NOT EXISTS "trades" (
 			"ID"	INTEGER NOT NULL,
 			"Name"	TEXT NOT NULL,
 			"Amount"	INTEGER NOT NULL,
-			"Price"	INTEGER NOT NULL,
-			PRIMARY KEY("ID" AUTOINCREMENT)d
+			"Price" INTEGER NOT NULL,
+			PRIMARY KEY("ID" AUTOINCREMENT)
 		);
 	`)
 	stmt.Exec()
@@ -65,7 +67,7 @@ func CreateTable() {
 }
 
 func DeleteTrade(ID int) {
-	db, err := sql.Open("sqlite3", "../trades.db")
+	db, err := sql.Open("sqlite3", "./trades.db")
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -85,7 +87,7 @@ func DeleteTrade(ID int) {
 }
 
 func UpdateTrade(ID int, name string, amount, price float64) {
-	db, err := sql.Open("sqlite3", "../trades.db")
+	db, err := sql.Open("sqlite3", "./trades.db")
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -104,7 +106,7 @@ func UpdateTrade(ID int, name string, amount, price float64) {
 }
 
 func GetTrades() {
-	db, err := sql.Open("sqlite3", "../trades.db")
+	db, err := sql.Open("sqlite3", "./trades.db")
 	if err != nil {
 		fmt.Println(err)
 	}

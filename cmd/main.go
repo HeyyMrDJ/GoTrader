@@ -1,12 +1,12 @@
 package main
 
 import (
+	"GoTrader/pkg/database/db_functions"
 	"GoTrader/pkg/http/http_server"
-
-	_ "github.com/mattn/go-sqlite3"
 )
 
 func main() {
+	db_functions.CreateTable()
 	http_server.StartServer()
 
 }

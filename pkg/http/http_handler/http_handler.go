@@ -73,7 +73,7 @@ func DashHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func TradeHandler(w http.ResponseWriter, r *http.Request) {
-	db, err := sql.Open("sqlite3", "../trades.db")
+	db, err := sql.Open("sqlite3", "./trades.db")
 	if err != nil {
 		fmt.Println(err)
 	}
