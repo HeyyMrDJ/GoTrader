@@ -30,7 +30,7 @@ func TradeAmount(PortValue, SLPercent float64) float64 {
 }
 
 func NewTrade(name string, amount, price float64) {
-	db, err := sql.Open("sqlite3", "./trades.db")
+	db, err := sql.Open("sqlite3", "../trades.db")
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -45,7 +45,7 @@ func NewTrade(name string, amount, price float64) {
 }
 
 func CreateTable() {
-	db, err := sql.Open("sqlite3", "./trades.db")
+	db, err := sql.Open("sqlite3", "../trades.db")
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -67,7 +67,7 @@ func CreateTable() {
 }
 
 func DeleteTrade(ID int) {
-	db, err := sql.Open("sqlite3", "./trades.db")
+	db, err := sql.Open("sqlite3", "../trades.db")
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -87,7 +87,7 @@ func DeleteTrade(ID int) {
 }
 
 func UpdateTrade(ID int, name string, amount, price float64) {
-	db, err := sql.Open("sqlite3", "./trades.db")
+	db, err := sql.Open("sqlite3", "../trades.db")
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -106,7 +106,7 @@ func UpdateTrade(ID int, name string, amount, price float64) {
 }
 
 func GetTrades() {
-	db, err := sql.Open("sqlite3", "./trades.db")
+	db, err := sql.Open("sqlite3", "../trades.db")
 	if err != nil {
 		fmt.Println(err)
 	}
